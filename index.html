@@ -29,7 +29,6 @@ body {
   display:flex;
   justify-content:center;
   align-items:center;
-  padding:15px;
 }
 
 .box {
@@ -39,52 +38,35 @@ body {
   border-radius:20px;
   text-align:center;
   color:white;
-  width:100%;
+  width:90%;
   max-width:320px;
-  animation: fadeIn 1.2s ease;
 }
 
-h2 { font-size:22px; }
-p { font-size:15px; margin-top:10px; }
-
-input {
+input, button {
+  width:100%;
   padding:10px;
+  margin-top:10px;
   border:none;
   border-radius:10px;
-  width:100%;
-  margin-top:10px;
 }
 
 button {
-  margin-top:15px;
-  padding:12px;
-  border:none;
-  border-radius:20px;
   background:white;
   color:#ff6b81;
   cursor:pointer;
-  width:100%;
 }
 
-.hidden {
-  display:none;
-}
-
-@keyframes fadeIn {
-  from {opacity:0; transform: translateY(20px);}
-  to {opacity:1; transform: translateY(0);}
-}
+.hidden { display:none; }
 
 /* LOVE */
 .heart {
   position:absolute;
   color:white;
-  font-size:20px;
   animation: floatUp 5s linear infinite;
 }
 
 @keyframes floatUp {
-  0% {transform: translateY(100vh); opacity:1;}
+  0% {transform: translateY(100vh);}
   100% {transform: translateY(-10vh); opacity:0;}
 }
 </style>
@@ -92,16 +74,14 @@ button {
 
 <body>
 
-<!-- LOGIN -->
 <div class="overlay" id="login">
   <div class="box">
     <h2>Kode rahasia dulu 💌</h2>
-    <input type="password" id="pass" placeholder="kata spesial kita">
-    <button onclick="cek(this)">Buka</button>
+    <input type="password" id="pass">
+    <button onclick="cek()">Buka</button>
   </div>
 </div>
 
-<!-- MAIN -->
 <div class="overlay hidden" id="main">
   <div class="box">
     <h2>...</h2>
@@ -115,52 +95,68 @@ button {
   </div>
 </div>
 
-<!-- AUDIO -->
-<audio id="music" loop preload="auto">
+<audio id="music" loop>
   <source src="party.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-
 let password = "231223";
+let music = document.getElementById("music");
 
-function cek(btn){
+// 🔥 STEP 1: UNLOCK AUDIO (WAJIB UNTUK HP)
+document.addEventListener("click", function unlockAudio(){
+  music.play().then(()=>{
+    music.pause();
+    music.currentTime = 0;
+    document.removeEventListener("click", unlockAudio);
+  }).catch(()=>{});
+});
+
+// 🔥 STEP 2: FUNCTION LOGIN
+function cek(){
   let input = document.getElementById("pass").value;
-  let music = document.getElementById("music");
 
   if(input === password){
 
-    // 🔥 INI KUNCI: play langsung dari klik
-    music.currentTime = 137;
-    music.play();
+    // tunggu audio siap dulu
+    music.addEventListener("loadeddata", function(){
+      music.currentTime = 137;
+      music.play();
+    }, { once: true });
 
-    // tampilkan halaman
+    // kalau sudah ready langsung play juga
+    if(music.readyState >= 2){
+      music.currentTime = 137;
+      music.play().catch(()=>{
+        alert("Tap sekali lagi ya biar lagunya jalan 😳");
+      });
+    }
+
     document.getElementById("login").classList.add("hidden");
     document.getElementById("main").classList.remove("hidden");
 
     startHearts();
 
   } else {
-    alert("Salah 😝 coba lagi");
+    alert("Salah 😝");
   }
 }
 
-/* LOVE */
+// 💖 LOVE
 function startHearts(){
-  setInterval(() => {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML = "❤️";
+  setInterval(()=>{
+    let heart = document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="❤️";
 
-    heart.style.left = Math.random()*100+"vw";
+    heart.style.left = Math.random()*100+"%";
     heart.style.fontSize = (Math.random()*20+10)+"px";
 
     document.body.appendChild(heart);
 
-    setTimeout(()=>{ heart.remove(); },5000);
+    setTimeout(()=>heart.remove(),5000);
   },300);
 }
-
 </script>
 
 </body>
