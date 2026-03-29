@@ -19,7 +19,6 @@ body {
   overflow:hidden;
 }
 
-/* overlay */
 .overlay {
   background: rgba(0,0,0,0.6);
   width:100%;
@@ -33,7 +32,6 @@ body {
   padding:15px;
 }
 
-/* box */
 .box {
   background: rgba(255,255,255,0.12);
   backdrop-filter: blur(12px);
@@ -49,7 +47,6 @@ body {
 h2 { font-size:22px; }
 p { font-size:15px; margin-top:10px; }
 
-/* input */
 input {
   padding:10px;
   border:none;
@@ -58,7 +55,6 @@ input {
   margin-top:10px;
 }
 
-/* button */
 button {
   margin-top:15px;
   padding:12px;
@@ -74,13 +70,12 @@ button {
   display:none;
 }
 
-/* animasi masuk */
 @keyframes fadeIn {
   from {opacity:0; transform: translateY(20px);}
   to {opacity:1; transform: translateY(0);}
 }
 
-/* LOVE ANIMATION */
+/* LOVE */
 .heart {
   position:absolute;
   color:white;
@@ -102,7 +97,7 @@ button {
   <div class="box">
     <h2>Kode rahasia dulu 💌</h2>
     <input type="password" id="pass" placeholder="kata spesial kita">
-    <button onclick="cek()">Buka</button>
+    <button onclick="cek(this)">Buka</button>
   </div>
 </div>
 
@@ -120,31 +115,28 @@ button {
   </div>
 </div>
 
-<!-- MUSIK -->
-<audio id="music" loop>
+<!-- AUDIO -->
+<audio id="music" loop preload="auto">
   <source src="musikk.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
-/* PASSWORD */
 let password = "231223";
 
-function cek(){
+function cek(btn){
   let input = document.getElementById("pass").value;
+  let music = document.getElementById("music");
 
   if(input === password){
+
+    // 🔥 INI KUNCI: play langsung dari klik
+    music.currentTime = 30;
+    music.play();
+
+    // tampilkan halaman
     document.getElementById("login").classList.add("hidden");
     document.getElementById("main").classList.remove("hidden");
-
-    let music = document.getElementById("music");
-
-    // FIX autoplay biar lebih aman di HP
-    music.currentTime = 30;
-    music.muted = false;
-    music.play().catch(() => {
-      console.log("Autoplay diblok, tunggu interaksi");
-    });
 
     startHearts();
 
@@ -153,7 +145,7 @@ function cek(){
   }
 }
 
-/* LOVE FUNCTION */
+/* LOVE */
 function startHearts(){
   setInterval(() => {
     const heart = document.createElement("div");
