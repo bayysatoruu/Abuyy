@@ -93,28 +93,25 @@ button {
       u have kind heart like an angel 
       and i hope i will love u till the world stops turning.
     </p>
+
+    <!-- 🔥 TOMBOL PLAY MANUAL -->
+    <button onclick="playMusic()">Putar Lagu 🎵</button>
   </div>
 </div>
 
-<!-- PLAYER -->
-<div id="player"></div>
+<!-- AUDIO -->
+<audio id="music">
+  <source src="party.mp3" type="audio/mpeg">
+</audio>
 
 <script>
+
 let password = "231223";
 
 function cek(){
   let input = document.getElementById("pass").value;
 
   if(input === password){
-
-    // 🔥 FIX: ada allow autoplay
-    document.getElementById("player").innerHTML = `
-      <iframe width="0" height="0"
-      src="https://www.youtube.com/embed/UtF6Jej8yb4?autoplay=1&start=137&controls=0"
-      frameborder="0"
-      allow="autoplay"></iframe>
-    `;
-
     document.getElementById("login").classList.add("hidden");
     document.getElementById("main").classList.remove("hidden");
 
@@ -123,6 +120,14 @@ function cek(){
   } else {
     alert("Salah 😝");
   }
+}
+
+// 🔥 PLAY MANUAL (INI PASTI BUNYI)
+function playMusic(){
+  let music = document.getElementById("music");
+
+  music.currentTime = 137; // reff
+  music.play();
 }
 
 /* LOVE */
@@ -140,6 +145,7 @@ function startHearts(){
     setTimeout(()=>heart.remove(),5000);
   },300);
 }
+
 </script>
 
 </body>
