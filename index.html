@@ -19,7 +19,6 @@ body {
   overflow:hidden;
 }
 
-/* overlay */
 .overlay {
   background: rgba(0,0,0,0.6);
   width:100%;
@@ -32,7 +31,6 @@ body {
   align-items:center;
 }
 
-/* box */
 .box {
   background: rgba(255,255,255,0.12);
   backdrop-filter: blur(12px);
@@ -60,7 +58,6 @@ button {
 
 .hidden { display:none; }
 
-/* LOVE */
 .heart {
   position:absolute;
   color:white;
@@ -80,7 +77,7 @@ button {
 <div class="overlay" id="login">
   <div class="box">
     <h2>Kode rahasia dulu 💌</h2>
-    <input type="password" id="pass" placeholder="kata spesial kita">
+    <input type="password" id="pass">
     <button onclick="cek()">Buka</button>
   </div>
 </div>
@@ -99,9 +96,9 @@ button {
   </div>
 </div>
 
-<!-- YOUTUBE PLAYER (HIDDEN) -->
+<!-- YOUTUBE PLAYER -->
 <iframe id="ytplayer" width="0" height="0"
-src="https://www.youtube.com/embed/UtF6Jej8yb4?enablejsapi=1&controls=0"
+src="https://www.youtube.com/embed/UtF6Jej8yb4?enablejsapi=1&controls=0&mute=1"
 frameborder="0"></iframe>
 
 <script src="https://www.youtube.com/iframe_api"></script>
@@ -110,17 +107,25 @@ frameborder="0"></iframe>
 
 let password = "231223";
 let player;
+let ready = false;
 
-/* YOUTUBE INIT */
+/* INIT PLAYER TANPA AUTO PLAY */
 function onYouTubeIframeAPIReady() {
-  player = new YT.Player('ytplayer');
+  player = new YT.Player('ytplayer', {
+    events: {
+      'onReady': function(){
+        ready = true;
+      }
+    }
+  });
 }
 
-/* PLAY MUSIC */
+/* PLAY PAS LOGIN */
 function playMusic(){
-  if(player){
-    player.seekTo(137); // 🔥 REFF
-    player.playVideo();
+  if(player && ready){
+    player.unMute();           // buka mute
+    player.seekTo(137, true);  // langsung ke reff (2:17)
+    player.playVideo();        // baru play
   }
 }
 
