@@ -16,6 +16,7 @@ body {
   justify-content:center;
   align-items:center;
   background:url('eaea.jpeg') no-repeat center/cover;
+  overflow:hidden;
 }
 
 /* overlay */
@@ -73,10 +74,23 @@ button {
   display:none;
 }
 
-/* animasi */
+/* animasi masuk */
 @keyframes fadeIn {
   from {opacity:0; transform: translateY(20px);}
   to {opacity:1; transform: translateY(0);}
+}
+
+/* LOVE ANIMATION */
+.heart {
+  position:absolute;
+  color:white;
+  font-size:20px;
+  animation: floatUp 5s linear infinite;
+}
+
+@keyframes floatUp {
+  0% {transform: translateY(100vh); opacity:1;}
+  100% {transform: translateY(-10vh); opacity:0;}
 }
 </style>
 </head>
@@ -87,7 +101,7 @@ button {
 <div class="overlay" id="login">
   <div class="box">
     <h2>Kode rahasia dulu 💌</h2>
-    <input type="password" id="pass" placeholder="kata spesial kita">
+    <input type="password" id="pass" placeholder="hari spesial kita">
     <button onclick="cek()">Buka</button>
   </div>
 </div>
@@ -114,7 +128,7 @@ button {
 <script>
 
 /* PASSWORD */
-let password = "231223"; // GANTI INI
+let password = "231223";
 
 function cek(){
   let input = document.getElementById("pass").value;
@@ -124,12 +138,35 @@ function cek(){
     document.getElementById("main").classList.remove("hidden");
 
     let music = document.getElementById("music");
-    music.currentTime = 30; // ⬅️ detik reff (opsional)
-    music.play();
+
+    // FIX autoplay biar lebih aman di HP
+    music.currentTime = 30;
+    music.muted = false;
+    music.play().catch(() => {
+      console.log("Autoplay diblok, tunggu interaksi");
+    });
+
+    startHearts();
 
   } else {
     alert("Salah 😝 coba lagi");
   }
+}
+
+/* LOVE FUNCTION */
+function startHearts(){
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+
+    heart.style.left = Math.random()*100+"vw";
+    heart.style.fontSize = (Math.random()*20+10)+"px";
+
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{ heart.remove(); },5000);
+  },300);
 }
 
 </script>
