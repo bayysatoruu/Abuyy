@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>For You ❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      color: white;
+      width: 300px;
+      animation: fadeIn 2s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      background: white;
+      color: #ff6b81;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(30px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    .heart {
+      position: absolute;
+      color: white;
+      font-size: 20px;
+      animation: floatUp 5s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {transform: translateY(100vh); opacity: 1;}
+      100% {transform: translateY(-10vh); opacity: 0;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Hai Kamu ❤️</h1>
+  <p id="text">Aku mau jujur sesuatu...</p>
+  <button onclick="next()">Klik di sini</button>
+</div>
+
+<script>
+let step = 0;
+
+function next() {
+  const text = document.getElementById("text");
+
+  if (step === 0) {
+    text.innerHTML = "Awalnya aku biasa aja...";
+  } else if (step === 1) {
+    text.innerHTML = "Tapi lama-lama kamu jadi spesial 😳";
+  } else if (step === 2) {
+    text.innerHTML = "Dan sekarang...";
+  } else if (step === 3) {
+    text.innerHTML = "Aku sayang kamu ❤️";
+  }
+
+  step++;
+}
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 5000);
+}
+
+setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
