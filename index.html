@@ -96,46 +96,23 @@ button {
   </div>
 </div>
 
-<!-- YOUTUBE PLAYER -->
-<iframe id="ytplayer" width="0" height="0"
-src="https://www.youtube.com/embed/UtF6Jej8yb4?enablejsapi=1&controls=0&mute=1"
-frameborder="0"></iframe>
-
-<script src="https://www.youtube.com/iframe_api"></script>
+<!-- PLAYER (AWALNYA KOSONG) -->
+<div id="player"></div>
 
 <script>
-
 let password = "231223";
-let player;
-let ready = false;
 
-/* INIT PLAYER TANPA AUTO PLAY */
-function onYouTubeIframeAPIReady() {
-  player = new YT.Player('ytplayer', {
-    events: {
-      'onReady': function(){
-        ready = true;
-      }
-    }
-  });
-}
-
-/* PLAY PAS LOGIN */
-function playMusic(){
-  if(player && ready){
-    player.unMute();           // buka mute
-    player.seekTo(137, true);  // langsung ke reff (2:17)
-    player.playVideo();        // baru play
-  }
-}
-
-/* LOGIN */
 function cek(){
   let input = document.getElementById("pass").value;
 
   if(input === password){
 
-    playMusic();
+    // 🔥 LOAD VIDEO SAAT LOGIN (INI KUNCI)
+    document.getElementById("player").innerHTML = `
+      <iframe width="0" height="0"
+      src="https://www.youtube.com/embed/UtF6Jej8yb4?autoplay=1&start=137&controls=0"
+      frameborder="0"></iframe>
+    `;
 
     document.getElementById("login").classList.add("hidden");
     document.getElementById("main").classList.remove("hidden");
@@ -162,7 +139,6 @@ function startHearts(){
     setTimeout(()=>heart.remove(),5000);
   },300);
 }
-
 </script>
 
 </body>
